@@ -5,7 +5,7 @@ function IssuesPage() {
   return (
     <div>
       <Button>
-        <Link href='/issues/new'>NewIssue</Link>
+        <Link href='/issues/new'>New Issue</Link>
       </Button>
     </div>
   );
