@@ -1,6 +1,7 @@
 'use client';
-import { Button, TextArea, TextField, Callout, Text } from '@radix-ui/themes';
+//import dynamic from 'next/dynamic'; // for lazy loading
 import SimpleMDE from 'react-simplemde-editor';
+import { Button, TextArea, TextField, Callout, Text } from '@radix-ui/themes';
 import 'easymde/dist/easymde.min.css';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
@@ -17,6 +18,10 @@ type IssueForm = z.infer<typeof createIssueSchema>;
 //   title: string;
 //   description: string;
 // }
+
+// const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
+//   ssr: false,
+// });
 
 function NewIssuePage() {
   const router = useRouter();
