@@ -1,4 +1,4 @@
 const LoadingNewIssuePage = () => {
-  return <div>loading...</div>;
+  return <div>Loading Issue...</div>;
 };
 export default LoadingNewIssuePage;
