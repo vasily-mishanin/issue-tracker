@@ -1,8 +1,6 @@
 import { Table } from '@radix-ui/themes';
-// import IssueStatusBadge from '../components/IssueStatusBadge';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 import IssueActions from './IssueActions';
+import { Skeleton } from '@/app/components';
 
 const LoadingIssuesPage = () => {
   const issues = [1, 2, 3, 4, 5];
@@ -28,7 +26,7 @@ const LoadingIssuesPage = () => {
               <Table.Cell>
                 {/* {issue.title} */} <Skeleton />
                 <div className='block md:hidden'>
-                  {/* <IssueStatusBadge status={issue.status} /> */}{' '}
+                  {/* <IssueStatusBadge status={issue.status} /> */}
                   <Skeleton />
                 </div>
               </Table.Cell>
@@ -36,7 +34,7 @@ const LoadingIssuesPage = () => {
                 {/* <IssueStatusBadge status={issue.status} /> */} <Skeleton />
               </Table.Cell>
               <Table.Cell className='hidden md:table-cell'>
-                {/* {issue.createdAt.toDateString()} <Skeleton/> */}{' '}
+                {/* {issue.createdAt.toDateString()} <Skeleton/> */}
                 <Skeleton />
               </Table.Cell>
             </Table.Row>
