@@ -34,9 +34,15 @@ function IssueForm({ issue }: { issue?: Issue }) {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsSubmitting(true);
-      await axios.post('/api/issues', data);
+      if (issue) {
+        await axios.patch(`/api/issues/${issue.id}`, data);
+        // setIsSubmitting(false);
+        // router.push(`/issues/${issue.id}`);
+      } else {
+        await axios.post('/api/issues', data);
+      }
       setIsSubmitting(false);
-      router.push('/issues');
+      router.push(`/issues`);
     } catch (error) {
       setIsSubmitting(false);
       console.log(error);
@@ -61,7 +67,7 @@ function IssueForm({ issue }: { issue?: Issue }) {
         </TextField.Root>
         {errors.title && <ErrorMessage>{errors?.title.message}</ErrorMessage>}
         {/* <TextArea placeholder='Description' /> */}
-        {/* To grab input from third party component */}
+        {/* To grab input from third party component (SimpleMDE) use Controller */}
         <Controller
           name='description'
           defaultValue={issue?.description}
@@ -75,7 +81,8 @@ function IssueForm({ issue }: { issue?: Issue }) {
         )}
 
         <Button disabled={isSubmitting}>
-          Submit new issue {isSubmitting && <Spinner />}
+          {issue ? 'Update issue' : 'Submit new issue'}{' '}
+          {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>
