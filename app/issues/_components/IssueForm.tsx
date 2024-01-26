@@ -1,6 +1,5 @@
 'use client';
-import dynamic from 'next/dynamic'; // for lazy loading
-//import SimpleMDE from 'react-simplemde-editor';
+import SimpleMDE from 'react-simplemde-editor';
 import { Button, TextArea, TextField, Callout, Text } from '@radix-ui/themes';
 import 'easymde/dist/easymde.min.css';
 import { useForm, Controller } from 'react-hook-form';
@@ -14,8 +13,6 @@ import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
 import { Issue } from '@prisma/client';
 type IssueFormData = z.infer<typeof createIssueSchema>;
-
-const SimpleMDE = dynamic(() => import('react-simplemde-editor'));
 
 function IssueForm({ issue }: { issue?: Issue }) {
   const router = useRouter();
