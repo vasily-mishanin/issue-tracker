@@ -15,7 +15,7 @@ const LoadingIssueDetailsPage = () => {
 
       <Card className='prose'>
         {/* <ReactMarkdown>{issue.description}</ReactMarkdown> */}
-        <Skeleton width='10rem' count={3} />
+        <Skeleton width='15rem' count={4} />
       </Card>
     </Box>
   );
