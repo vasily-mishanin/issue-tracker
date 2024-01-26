@@ -29,7 +29,5 @@ export async function PATCH(
     data: { title: body.title, description: body.description },
   });
 
-  console.log({ updatedIssue });
-
   return NextResponse.json(updatedIssue); // 202 Ok
 }

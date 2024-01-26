@@ -36,13 +36,12 @@ function IssueForm({ issue }: { issue?: Issue }) {
       setIsSubmitting(true);
       if (issue) {
         await axios.patch(`/api/issues/${issue.id}`, data);
-        // setIsSubmitting(false);
-        // router.push(`/issues/${issue.id}`);
       } else {
         await axios.post('/api/issues', data);
       }
       setIsSubmitting(false);
       router.push(`/issues`);
+      router.refresh(); // disables 30 seconds default cache
     } catch (error) {
       setIsSubmitting(false);
       console.log(error);
