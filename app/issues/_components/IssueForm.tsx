@@ -37,7 +37,7 @@ function IssueForm({ issue }: { issue?: Issue }) {
         await axios.post('/api/issues', data);
       }
       setIsSubmitting(false);
-      router.push(`/issues`);
+      router.push(`/issues/list`);
       router.refresh(); // disables 30 seconds default cache
     } catch (error) {
       setIsSubmitting(false);
