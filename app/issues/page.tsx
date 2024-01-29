@@ -47,7 +47,7 @@ async function IssuesPage() {
   );
 }
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'; // to always get last state from DB (no aggresive caching)
 // OR
 //export const revalidate = 0;
 // export const revalidate = 60; // 60 seconds
