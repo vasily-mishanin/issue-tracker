@@ -24,7 +24,7 @@ const NavBar = () => {
   return (
     <nav className='border-b mb-5 px-5 py-3'>
       <Container>
-        <Flex justify='between'>
+        <Flex justify='between' gap='4'>
           <Flex align='center' gap='3'>
             <Link href='/'>
               <FaBugs />
@@ -59,6 +59,7 @@ const NavBar = () => {
                         fallback='?'
                         size='4'
                         radius='full'
+                        referrerPolicy='no-referrer'
                       />
                     </DropdownMenu.Trigger>
 

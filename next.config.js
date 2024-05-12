@@ -1,4 +1,13 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
+const { sources } = require('next/dist/compiled/webpack/webpack');
 
-module.exports = nextConfig
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  async header() {
+    return {
+      source: '/:path*',
+      headers: [{ key: 'referrer-policy', value: 'no-referrer' }],
+    };
+  },
+};
+
+module.exports = nextConfig;
