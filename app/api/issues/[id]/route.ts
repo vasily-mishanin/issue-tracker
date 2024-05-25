@@ -11,6 +11,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   const session = await getServerSession(authOptions);
+  console.log({ session });
   if (!session) {
     return NextResponse.json({}, { status: 401, statusText: 'Unauthorized' });
   }
