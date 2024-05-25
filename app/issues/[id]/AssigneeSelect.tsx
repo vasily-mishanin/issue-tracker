@@ -5,6 +5,7 @@ import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 const UNASSIGNED = 'Unassigned';
 
@@ -36,30 +37,37 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   if (error) return null;
 
   return (
-    <Select.Root
-      defaultValue={issue.assignedToUserId || UNASSIGNED} // not string but element with "value"
-      onValueChange={(userId) => {
-        axios.patch(`/api/issues/${issue.id}`, {
-          assignedToUserId: userId !== UNASSIGNED ? userId : null,
-        });
-      }}
-    >
-      <Select.Trigger placeholder='Assign...'></Select.Trigger>
-      <Select.Content>
-        <Select.Group>
-          <Select.Label>Suggestions</Select.Label>
-          <Select.Item value={UNASSIGNED}>{UNASSIGNED}</Select.Item>
-          {users && users.length
-            ? users.map((user) => (
-                <Select.Item key={user.id} value={user.id}>
-                  {user.name}
-                </Select.Item>
-              ))
-            : null}
-          <Select.Item value='1'>Mosh Hamedani (hardcoded)</Select.Item>
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
+    <>
+      <Select.Root
+        defaultValue={issue.assignedToUserId || UNASSIGNED} // not string but element with "value"
+        onValueChange={(userId) => {
+          axios
+            .patch(`/xapi/issues/${issue.id}`, {
+              assignedToUserId: userId !== UNASSIGNED ? userId : null,
+            })
+            .catch((err) => {
+              toast.error('Changes could not be saved');
+            });
+        }}
+      >
+        <Select.Trigger placeholder='Assign...'></Select.Trigger>
+        <Select.Content>
+          <Select.Group>
+            <Select.Label>Suggestions</Select.Label>
+            <Select.Item value={UNASSIGNED}>{UNASSIGNED}</Select.Item>
+            {users && users.length
+              ? users.map((user) => (
+                  <Select.Item key={user.id} value={user.id}>
+                    {user.name}
+                  </Select.Item>
+                ))
+              : null}
+            <Select.Item value='1'>Mosh Hamedani (hardcoded)</Select.Item>
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
+      <Toaster />
+    </>
   );
 };
 export default AssigneeSelect;
