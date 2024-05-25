@@ -4,7 +4,6 @@ import { Issue, User } from '@prisma/client';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 const UNASSIGNED = 'Unassigned';
@@ -21,16 +20,17 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   //     fetchUsers();
   //   }, []);
 
-  const {
-    data: users,
-    error,
-    isLoading,
-  } = useQuery<User[]>({
-    queryKey: ['users'],
-    queryFn: () => axios.get('/api/users').then((res) => res.data),
-    staleTime: 60 * 1000, // 60s
-    retry: 3,
-  });
+  const { data: users, error, isLoading } = useUsers();
+
+  const assignIssue = (userId: string) => {
+    axios
+      .patch(`/xapi/issues/${issue.id}`, {
+        assignedToUserId: userId !== UNASSIGNED ? userId : null,
+      })
+      .catch((err) => {
+        toast.error('Changes could not be saved');
+      });
+  };
 
   if (isLoading) return <Skeleton />;
 
@@ -40,15 +40,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     <>
       <Select.Root
         defaultValue={issue.assignedToUserId || UNASSIGNED} // not string but element with "value"
-        onValueChange={(userId) => {
-          axios
-            .patch(`/xapi/issues/${issue.id}`, {
-              assignedToUserId: userId !== UNASSIGNED ? userId : null,
-            })
-            .catch((err) => {
-              toast.error('Changes could not be saved');
-            });
-        }}
+        onValueChange={assignIssue}
       >
         <Select.Trigger placeholder='Assign...'></Select.Trigger>
         <Select.Content>
@@ -70,4 +62,13 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     </>
   );
 };
+
+const useUsers = () =>
+  useQuery<User[]>({
+    queryKey: ['users'],
+    queryFn: () => axios.get('/api/users').then((res) => res.data), // thought: API endpoint is a contract with an outer world and should not be changed
+    staleTime: 60 * 1000, // 60s depends on app requirements
+    retry: 3,
+  });
+
 export default AssigneeSelect;
