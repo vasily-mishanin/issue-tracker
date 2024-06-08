@@ -2,7 +2,7 @@
 
 import { Status } from '@prisma/client';
 import { Select } from '@radix-ui/themes';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export type FilterStatus = { label: string; value?: Status };
 
@@ -15,14 +15,30 @@ const statuses: FilterStatus[] = [
 
 const IssueStatusFilter = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const navigateToFiltered = (value: Status) => {
-    const query = value ? `?status=${value}` : '';
-    router.push(`/issues/list${query}`);
+  const navigateToFiltered = (status: Status) => {
+    console.log('navigateToFiltered');
+    const queryParams = new URLSearchParams();
+    if (status) {
+      queryParams.append('status', status);
+    }
+    if (searchParams.get('orderBy')) {
+      queryParams.append('orderBy', searchParams.get('orderBy')!);
+    }
+    if (searchParams.get('order')) {
+      queryParams.append('order', searchParams.get('order')!);
+    }
+
+    console.log(queryParams);
+    router.push(`/issues/list${queryParams.size ? '?' + queryParams : ''}`);
   };
 
   return (
-    <Select.Root onValueChange={navigateToFiltered}>
+    <Select.Root
+      defaultValue={searchParams.get('status') ?? 'all'}
+      onValueChange={navigateToFiltered}
+    >
       <Select.Trigger placeholder='Filter by status..' />
       <Select.Content>
         {statuses.map((status) => (

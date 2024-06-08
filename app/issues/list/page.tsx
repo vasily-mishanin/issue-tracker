@@ -11,6 +11,7 @@ type Props = {
   searchParams: {
     status: Status;
     orderBy: keyof Issue;
+    order: 'asc' | 'desc';
   };
 };
 
@@ -27,7 +28,7 @@ async function IssuesPage({ searchParams }: Props) {
     : undefined;
 
   const orderBy = columns.map((col) => col.value).includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: 'asc' }
+    ? { [searchParams.orderBy]: searchParams.order }
     : undefined;
 
   const issues = await prisma.issue.findMany({
@@ -47,15 +48,23 @@ async function IssuesPage({ searchParams }: Props) {
                   {col.label}
                 </NextLink> */}
                 <NextLink
-                  href={{ query: { ...searchParams, orderBy: col.value } }}
+                  href={{
+                    query: {
+                      ...searchParams,
+                      orderBy: col.value,
+                      order: searchParams.order === 'asc' ? 'desc' : 'asc',
+                    },
+                  }}
                 >
                   {col.label}
-                  {col.value === searchParams.orderBy && (
-                    <ArrowUpIcon className='inline' />
-                  )}
-                  {col.value === searchParams.orderBy && (
-                    <ArrowDownIcon className='inline' />
-                  )}
+                  {col.value === searchParams.orderBy &&
+                    searchParams.order === 'asc' && (
+                      <ArrowUpIcon className='inline' />
+                    )}
+                  {col.value === searchParams.orderBy &&
+                    searchParams.order === 'desc' && (
+                      <ArrowDownIcon className='inline' />
+                    )}
                 </NextLink>
               </Table.ColumnHeaderCell>
             ))}
