@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import IssuesSummary from './IssuesSummary';
 import LatestIssues from './LatestIssues';
 import { Spinner } from './components';
+import IssuesChart from './components/IssuesChart';
 
 export default async function Home() {
   const openIssues =
@@ -23,6 +24,11 @@ export default async function Home() {
     <div>
       <Suspense fallback={<Spinner />}>
         <IssuesSummary
+          open={openIssues}
+          closed={closedIssues}
+          inProgress={inProgressIssues}
+        />
+        <IssuesChart
           open={openIssues}
           closed={closedIssues}
           inProgress={inProgressIssues}
