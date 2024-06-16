@@ -3,6 +3,7 @@ import IssuesSummary from './IssuesSummary';
 import LatestIssues from './LatestIssues';
 import { Spinner } from './components';
 import IssuesChart from './components/IssuesChart';
+import { Flex, Grid } from '@radix-ui/themes';
 
 export default async function Home() {
   const openIssues =
@@ -21,20 +22,25 @@ export default async function Home() {
     })) ?? 0;
 
   return (
-    <div>
+    <Grid columns={{ initial: '1', md: '2' }} gap='8'>
       <Suspense fallback={<Spinner />}>
-        <IssuesSummary
-          open={openIssues}
-          closed={closedIssues}
-          inProgress={inProgressIssues}
-        />
-        <IssuesChart
-          open={openIssues}
-          closed={closedIssues}
-          inProgress={inProgressIssues}
-        />
+        <Flex direction='column' gap='4'>
+          <IssuesChart
+            open={openIssues}
+            closed={closedIssues}
+            inProgress={inProgressIssues}
+          />
+          <IssuesSummary
+            open={openIssues}
+            closed={closedIssues}
+            inProgress={inProgressIssues}
+          />
+        </Flex>
+
+        <Flex direction='column'>
+          <LatestIssues />
+        </Flex>
       </Suspense>
-      <LatestIssues />
-    </div>
+    </Grid>
   );
 }
