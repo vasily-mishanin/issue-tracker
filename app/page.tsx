@@ -4,6 +4,7 @@ import LatestIssues from './LatestIssues';
 import { Spinner } from './components';
 import IssuesChart from './components/IssuesChart';
 import { Flex, Grid } from '@radix-ui/themes';
+import { prisma } from '@/prisma/client';
 
 export default async function Home() {
   const openIssues =

@@ -1,4 +1,4 @@
-import prisma from '@/prisma/client';
+import { prisma } from '@/prisma/client';
 import IssueActions from './IssueActions';
 import Pagination from '@/app/components/Pagination';
 import IssuesTable from '../_components/IssuesTable';
