@@ -1,6 +1,6 @@
 import IssueStatusBadge from '@/app/components/IssueStatusBadge';
 import { delay } from '@/app/utils/delay';
-import prisma from '@/prisma/client';
+import { prisma } from '@/prisma/client';
 import { Box, Button, Card, Flex, Grid, Heading, Text } from '@radix-ui/themes';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
