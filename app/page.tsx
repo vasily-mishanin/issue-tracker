@@ -5,6 +5,7 @@ import { Spinner } from './components';
 import IssuesChart from './components/IssuesChart';
 import { Flex, Grid } from '@radix-ui/themes';
 import { prisma } from '@/prisma/client';
+import { Metadata } from 'next';
 
 export default async function Home() {
   const openIssues =
@@ -45,3 +46,8 @@ export default async function Home() {
     </Grid>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Issues Tracker - Dashboard',
+  description: 'View a summary of project issues',
+};

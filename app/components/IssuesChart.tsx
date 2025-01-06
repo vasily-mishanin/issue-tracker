@@ -13,7 +13,7 @@ const IssuesChart = ({ open, closed, inProgress }: Props) => {
   const data = [
     { label: 'Open', value: open },
     { label: 'In-Progress', value: inProgress },
-    { label: 'Issues', value: closed },
+    { label: 'Closed', value: closed },
   ];
   return (
     <Card>

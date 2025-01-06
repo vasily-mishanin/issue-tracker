@@ -4,6 +4,7 @@ import Pagination from '@/app/components/Pagination';
 import IssuesTable from '../_components/IssuesTable';
 import { Issue, Status } from '@prisma/client';
 import { Flex } from '@radix-ui/themes';
+import { Metadata } from 'next';
 //import { delay } from '../utils/delay';
 
 export type Column = { label: string; value: keyof Issue; className?: string };
@@ -72,3 +73,8 @@ export const dynamic = 'force-dynamic'; // to always get last state from DB (no 
 //export const revalidate = 0;
 // export const revalidate = 60; // 60 seconds
 export default IssuesPage;
+
+export const metadata: Metadata = {
+  title: 'Issues Tracker - Issue List',
+  description: 'View all project issues',
+};
