@@ -4,6 +4,9 @@
 // npm prisma format
 // npx prisma migrate dev 
 
+// on Vercel we add command: 'prisma generate && prisma migrate deploy && next build' 
+// to regenerate schema and client on every deploy
+
 generator client {
   provider = "prisma-client-js"
 }
